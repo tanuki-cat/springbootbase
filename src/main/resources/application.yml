@@ -1,0 +1,33 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: spring-boot-base
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/springbootbase?useUnicode=true&characterEncoding=utf8&characterSetResults=utf8&useSSL=false&serverTimezone=UTC
+    username: root
+    password: 123456
+  redis:
+    host: localhost
+    port: 6379
+    password:
+  cache:
+    type: redis
+
+cache:
+  default-exp: 3600
+# MyBatis Plus??
+mybatis-plus:
+  # ???????
+  typeAliasesPackage: com.lichi.**.entity
+  # ??mapper?????????mapper.xml????
+  mapperLocations: classpath*:mapper/**/*Mapper.xml
+  global-config:
+    db-config:
+      updateStrategy: not_null
+      insertStrategy: not_null
+      logic-delete-field: is_deleted # ????????????(since 3.3.0,????????????2)
+      logic-delete-value: 1 # ??????(??? 1)
+      logic-not-delete-value: 0 # ??????(??? 0)
