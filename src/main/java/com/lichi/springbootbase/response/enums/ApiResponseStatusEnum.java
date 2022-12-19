@@ -30,7 +30,11 @@ public enum ApiResponseStatusEnum {
     /**
      * 服务器内部错误
      */
-    INTERNAL_SERVER_ERROR(HttpStatus.INTERNAL_SERVER_ERROR.value(), "服务器内部错误");
+    INTERNAL_SERVER_ERROR(HttpStatus.INTERNAL_SERVER_ERROR.value(), "服务器内部错误"),
+    /**
+     * 权限不足
+     */
+    FORBIDDEN(HttpStatus.FORBIDDEN.value(), "权限不足");
 
     /**
      * 响应码

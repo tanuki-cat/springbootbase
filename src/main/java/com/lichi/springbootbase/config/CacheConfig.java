@@ -97,7 +97,7 @@ public class CacheConfig {
      * @return CacheManager
      */
     @Bean
-    CacheManager cacheManager(RedisConnectionFactory factory) {
+    public CacheManager cacheManager(RedisConnectionFactory factory) {
         RedisSerializer<String> redisSerializer = new StringRedisSerializer();
         //使用jackson 配置redis value 的序列化
         Jackson2JsonRedisSerializer<JSON> jackson2JsonRedisSerializer = new Jackson2JsonRedisSerializer<>(JSON.class);
