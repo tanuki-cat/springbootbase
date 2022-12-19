@@ -4,7 +4,7 @@ import com.lichi.springbootbase.response.ApiResponse;
 
 /**
  * @description: 权限校验相关service
- * @author: lichi
+ * @author: lychee
  * @date: 2022/12/17 20:15
  * @version: 1.0
  * @since: 2022/12/17
