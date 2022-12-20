@@ -18,8 +18,12 @@ import java.util.Objects;
 @Component
 @Slf4j
 public class CacheComponent {
+
+    private static CacheManager cacheManager;
     @Autowired
-    private CacheManager cacheManager;
+    private void setCacheManager(CacheManager cacheManager){
+        CacheComponent.cacheManager = cacheManager;
+    }
 
     /**
      * 获取缓存
@@ -29,8 +33,7 @@ public class CacheComponent {
      * @return T
      * @param <T>
      */
-    public <T> T get(CacheNameEnum cacheName, String key, Class<T> clazz) {
-        log.debug("{} get -> cacheName [{}], key [{}], class type [{}]", this.getClass().getName(), cacheName, key, clazz.getName());
+    public static  <T> T get(CacheNameEnum cacheName, String key, Class<T> clazz) {
         return Objects.requireNonNull(cacheManager.getCache(cacheName.name())).get(key, clazz);
     }
 
@@ -40,8 +43,7 @@ public class CacheComponent {
      * @param key 缓存key
      * @param value 缓存对象
      */
-    public void put(CacheNameEnum cacheName, String key, Object value) {
-        log.debug("{} put -> cacheName [{}], key [{}], value [{}]", this.getClass().getName(), cacheName, key, value);
+    public static void put(CacheNameEnum cacheName, String key, Object value) {
         Objects.requireNonNull(cacheManager.getCache(cacheName.name())).put(key, value);
     }
 
@@ -50,8 +52,7 @@ public class CacheComponent {
      * @param cacheName 缓存名称
      * @param key  缓存key
      */
-    public void remove(CacheNameEnum cacheName, String key) {
-        log.debug("{} remove -> cacheName [{}], key [{}]", this.getClass().getName(), cacheName, key);
+    public static void remove(CacheNameEnum cacheName, String key) {
         Objects.requireNonNull(cacheManager.getCache(cacheName.name())).evict(key);
     }
 }

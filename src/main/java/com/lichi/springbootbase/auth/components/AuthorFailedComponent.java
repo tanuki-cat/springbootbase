@@ -18,7 +18,6 @@ import java.io.IOException;
  * @version: 1.0
  * @since: 2022/12/19
  */
-@Component
 public class AuthorFailedComponent implements AuthenticationEntryPoint {
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException, ServletException {

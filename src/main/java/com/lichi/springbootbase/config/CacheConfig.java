@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.jsontype.impl.LaissezFaireSubTypeValidator;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.EnableCaching;
@@ -76,8 +77,12 @@ public class CacheConfig {
         // 设置连接工厂
         redisTemplate.setConnectionFactory(factory);
         // 使用Jackson2JsonRedisSerializer来序列化和反序列化redis的value值
-        Jackson2JsonRedisSerializer<JSON> jackson2JsonRedisSerializer = new Jackson2JsonRedisSerializer<>(JSON.class);
+        Jackson2JsonRedisSerializer<Object> jackson2JsonRedisSerializer = new Jackson2JsonRedisSerializer<>(Object.class);
+        // 使用StringRedisSerializer来序列化和反序列化redis的key值
+        RedisSerializer<String> strSerializer = new StringRedisSerializer();
         ObjectMapper om = new ObjectMapper();
+        //注册java8时间模块
+        om.registerModule(new JavaTimeModule());
         om.setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.ANY);
         om.activateDefaultTyping(LaissezFaireSubTypeValidator.instance,ObjectMapper.DefaultTyping.NON_FINAL);
         jackson2JsonRedisSerializer.setObjectMapper(om);
@@ -86,7 +91,7 @@ public class CacheConfig {
         // 设置序列化的hash值
         redisTemplate.setHashValueSerializer(jackson2JsonRedisSerializer);
         // 设置序列化的key值
-        redisTemplate.setKeySerializer(new StringRedisSerializer());
+        redisTemplate.setKeySerializer(strSerializer);
         redisTemplate.afterPropertiesSet();
         return redisTemplate;
     }
@@ -100,7 +105,7 @@ public class CacheConfig {
     public CacheManager cacheManager(RedisConnectionFactory factory) {
         RedisSerializer<String> redisSerializer = new StringRedisSerializer();
         //使用jackson 配置redis value 的序列化
-        Jackson2JsonRedisSerializer<JSON> jackson2JsonRedisSerializer = new Jackson2JsonRedisSerializer<>(JSON.class);
+        Jackson2JsonRedisSerializer<Object> jackson2JsonRedisSerializer = new Jackson2JsonRedisSerializer<>(Object.class);
         RedisCacheConfiguration cacheConfiguration = RedisCacheConfiguration.defaultCacheConfig()
                 //key序列化方式
                 .serializeKeysWith(RedisSerializationContext.SerializationPair.fromSerializer(redisSerializer))

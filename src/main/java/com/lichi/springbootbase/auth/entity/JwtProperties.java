@@ -16,17 +16,17 @@ public class JwtProperties {
 /**
      * jwt签名
      */
-    private String secret = "JWT_SECRET_KEY";
+    private  String secret = "JWT_SECRET_KEY";
     /**
      * jwt过期时间
      */
-    private Long expiration = 1800L;
+    private  Long expiration = 1800L;
     /**
      * jwt请求头
      */
-    private String header = "Authorization";
+    private  String header = "Authorization";
     /**
      * jwt前缀
      */
-    private String prefix = "Bearer ";
+    private  String prefix = "Bearer ";
 }

@@ -10,6 +10,7 @@ import com.lichi.springbootbase.auth.entity.UserDetail;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
@@ -26,20 +27,24 @@ import java.util.Date;
 public class JwtComponent {
 
 
+
+    private static JwtProperties jwtProperties;
     @Autowired
-    private JwtProperties jwtProperties;
+    private void setJwtProperties(JwtProperties jwtProperties){
+        JwtComponent.jwtProperties = jwtProperties;
+    }
 
     /**
      * 获取jwt token
      * @param request 请求
      * @return String
      */
-    public String getToken(HttpServletRequest request) {
+    public static String getToken(HttpServletRequest request) {
         return request.getHeader(jwtProperties.getHeader());
 
     }
 
-    public AccessToken createAccessToken(UserDetail userDetail) {
+    public static AccessToken createAccessToken(UserDetail userDetail) {
         return createToken(userDetail.getUsername());
     }
 
@@ -48,7 +53,7 @@ public class JwtComponent {
      * @param subject 主题
      * @return AccessToken
      */
-    private AccessToken createToken(String subject) {
+    private static AccessToken createToken(String subject) {
         //token 创建时间
         final Date createdDate = new Date();
         //token 过期时间
@@ -74,7 +79,7 @@ public class JwtComponent {
      * @param userDetail
      * @return
      */
-    public Boolean validationToken(String token, UserDetail userDetail) {
+    public static Boolean validationToken(String token, UserDetail userDetail) {
         try {
             DecodedJWT decodedJwt = getDecodedJwt(token);
             //如果有自定义的字段，可以在这里获取
@@ -92,7 +97,7 @@ public class JwtComponent {
      * @param token
      * @return
      */
-    public AccessToken refreshToken(String token) {
+    public static AccessToken refreshToken(String token) {
         DecodedJWT decodedJwt = getDecodedJwt(token);
         return createToken(decodedJwt.getSubject());
     }
@@ -102,7 +107,7 @@ public class JwtComponent {
      * @param expiration 过期时间
      * @return boolean
      */
-    private Boolean isExpired(Long expiration) {
+    private static Boolean isExpired(Long expiration) {
         return expiration < System.currentTimeMillis();
     }
 
@@ -111,7 +116,7 @@ public class JwtComponent {
      * @param token token
      * @return DecodedJWT
      */
-    private DecodedJWT getDecodedJwt(String token) {
+    private static DecodedJWT getDecodedJwt(String token) {
         JWTVerifier verifier = JWT.require(Algorithm.HMAC512(jwtProperties.getSecret()))
                 .build();
         return verifier.verify(token.substring(jwtProperties.getPrefix().length()));
@@ -122,7 +127,7 @@ public class JwtComponent {
      * @param token token
      * @return String
      */
-    public String getUsernameFromToken(String token) {
+    public static String getUsernameFromToken(String token) {
         DecodedJWT decodedJwt = getDecodedJwt(token);
         return decodedJwt.getSubject();
     }

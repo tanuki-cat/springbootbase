@@ -59,7 +59,7 @@ public class CustomUserDetailsServiceImpl implements UserDetailsService {
         LambdaQueryWrapper<UserInfo> query = new LambdaQueryWrapper<>();
         query.eq(UserInfo::getUsername,username);
         UserInfo userInfo = userInfoService.getOne(query);
-        if (ObjectUtils.isNotEmpty(userInfo)) {
+        if (ObjectUtils.isEmpty(userInfo)) {
             throw new UsernameNotFoundException("用户名或密码错误,登录失败");
         }
 

@@ -1,14 +1,21 @@
 package com.lichi.springbootbase;
 
+import com.lichi.springbootbase.auth.components.JwtComponent;
+import com.lichi.springbootbase.auth.entity.UserDetail;
 import com.lichi.springbootbase.response.ApiResponse;
 import com.lichi.springbootbase.response.enums.ApiResponseStatusEnum;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
 
 @SpringBootTest
 @Slf4j
 class SpringbootbaseApplicationTests {
+    @Autowired
+    private JwtComponent jwtComponent;
     static class Message {
         private String message;
 
@@ -38,4 +45,18 @@ class SpringbootbaseApplicationTests {
         log.info(s1.toString());
     }
 
+    @Test
+    void testComponent() {
+        UserDetail userDetail = new UserDetail();
+        jwtComponent.createAccessToken(userDetail);
+    }
+
+    @Test
+    void testPassEncode() {
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        final String passHash = encoder.encode("123456");
+        log.info("this is passHash: {}", passHash);
+        boolean matches = encoder.matches("123456", passHash);
+        log.info("this is matches: {}", matches);
+    }
 }
