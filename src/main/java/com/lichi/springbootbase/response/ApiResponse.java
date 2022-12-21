@@ -155,6 +155,17 @@ public class ApiResponse <T> {
     }
 
     /**
+     * 错误响应
+     * @param statusEnum    响应码
+     * @param message 响应消息
+     * @return ApiResponse<T>
+     * @param <T>
+     */
+    public static <T> ApiResponse<?> error(ApiResponseStatusEnum statusEnum, String message) {
+        return responseFail(statusEnum,message,null);
+    }
+
+    /**
      * 错误响应 默认服务器内部错误
      * @param message 响应消息
      * @param data  响应数据

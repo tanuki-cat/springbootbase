@@ -47,7 +47,8 @@ public class AuthServiceImpl implements AuthService {
         UserDetail userDetail = (UserDetail) authentication.getPrincipal();
         // 生成自定义jwt token
         AccessToken accessToken = JwtComponent.createAccessToken(userDetail);
-
+        //将jwt token 放入 userDetail
+        userDetail.setToken(accessToken.getToken());
         //放入缓存
         CacheComponent.put(CacheNameEnum.USER,userDetail.getUsername(),userDetail);
 
@@ -67,6 +68,8 @@ public class AuthServiceImpl implements AuthService {
         AccessToken accessToken = JwtComponent.refreshToken(token);
         UserDetail userDetail = JSON.to(UserDetail.class,CacheComponent.get(CacheNameEnum.USER,
                 accessToken.getLoginAccount(), Object.class));
+        // 将新的token放入userDetail
+        userDetail.setToken(accessToken.getToken());
         CacheComponent.put(CacheNameEnum.USER, accessToken.getLoginAccount(), userDetail);
         return ApiResponse.success(accessToken);
     }

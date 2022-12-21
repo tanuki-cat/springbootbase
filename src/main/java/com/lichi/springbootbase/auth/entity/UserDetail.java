@@ -23,12 +23,14 @@ import java.util.Objects;
  * @since: 2022/12/19
  */
 @Data
+@AllArgsConstructor
 @NoArgsConstructor
 public class UserDetail implements Serializable, UserDetails {
     @Serial
     private static final long serialVersionUID = 1L;
 
     private UserInfo userInfo;
+    private String token;
     private List<RoleInfo> roleInfoList;
     private Collection<? extends  GrantedAuthority> grantedAuthorities;
     private List<String> roles;
