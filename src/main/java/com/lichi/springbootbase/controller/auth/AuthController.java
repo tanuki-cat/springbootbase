@@ -1,6 +1,8 @@
 package com.lichi.springbootbase.controller.auth;
 
+import com.lichi.springbootbase.annotations.WebLog;
 import com.lichi.springbootbase.auth.components.JwtComponent;
+import com.lichi.springbootbase.auth.entity.JwtProperties;
 import com.lichi.springbootbase.auth.service.AuthService;
 import com.lichi.springbootbase.response.ApiResponse;
 import com.lichi.springbootbase.response.enums.ApiResponseStatusEnum;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
+
 
 /**
  * @Description: 认证接口
@@ -24,6 +27,7 @@ import javax.servlet.http.HttpServletRequest;
 @AllArgsConstructor
 @Slf4j
 public class AuthController {
+    private final JwtProperties jwtProperties;
     private final AuthService authService;
 
 
@@ -34,6 +38,7 @@ public class AuthController {
      * @return ApiResponse
      */
     @PostMapping("/login")
+    @WebLog(description = "登录")
     public ApiResponse<?> login(String username, String password) {
         try {
             return authService.login(username, password);
@@ -47,6 +52,7 @@ public class AuthController {
      * 登出
      * @return ApiResponse
      */
+    @WebLog(description = "登出")
     @PostMapping("/logout")
     public ApiResponse<?> logout() {
         try {
@@ -62,13 +68,17 @@ public class AuthController {
      * @param request HttpServletRequest
      * @return ApiResponse
      */
+    @WebLog(description = "刷新token")
     @PostMapping("/refresh")
-    public ApiResponse<?> refreshToken(HttpServletRequest request) {
+    public ApiResponse<?> refreshToken(String token) {
         try {
-            return authService.refreshToken(JwtComponent.getToken(request));
+            if (!token.startsWith(jwtProperties.getPrefix())) {
+               return ApiResponse.error("刷新token失败");
+            }
+            return authService.refreshToken(token);
         } catch (Exception e) {
             log.error("refreshToken error", e);
-            return ApiResponse.error(e.getMessage());
+            return ApiResponse.error("刷新token失败");
         }
     }
 }

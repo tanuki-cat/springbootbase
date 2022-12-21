@@ -7,8 +7,11 @@ import com.lichi.springbootbase.response.enums.ApiResponseStatusEnum;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceProperties;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
+import javax.sql.DataSource;
 
 
 @SpringBootTest
@@ -16,6 +19,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 class SpringbootbaseApplicationTests {
     @Autowired
     private JwtComponent jwtComponent;
+
+    private DataSourceProperties    dataSourceProperties;
     static class Message {
         private String message;
 
@@ -58,5 +63,10 @@ class SpringbootbaseApplicationTests {
         log.info("this is passHash: {}", passHash);
         boolean matches = encoder.matches("123456", passHash);
         log.info("this is matches: {}", matches);
+    }
+
+    @Test
+    void testJDBC(){
+        dataSourceProperties.getEmbeddedDatabaseConnection();
     }
 }

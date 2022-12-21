@@ -66,8 +66,8 @@ public class AuthServiceImpl implements AuthService {
     public ApiResponse<?> refreshToken(String token) {
         AccessToken accessToken = JwtComponent.refreshToken(token);
         UserDetail userDetail = JSON.to(UserDetail.class,CacheComponent.get(CacheNameEnum.USER,
-                accessToken.getLoginAccount(), UserDetail.class));
+                accessToken.getLoginAccount(), Object.class));
         CacheComponent.put(CacheNameEnum.USER, accessToken.getLoginAccount(), userDetail);
-        return null;
+        return ApiResponse.success(accessToken);
     }
 }

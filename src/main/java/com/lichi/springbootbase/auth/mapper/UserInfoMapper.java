@@ -11,7 +11,6 @@ import org.apache.ibatis.annotations.Mapper;
  * @version: 1.0
  * @since: 2022/12/19
  */
-@Mapper
 public interface UserInfoMapper extends BaseMapper<UserInfo> {
 
 }

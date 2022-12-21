@@ -43,13 +43,13 @@ public class CacheConfig {
     /**
      * redis 主机地址
      */
-    @Value("${spring.redis.host}")
+    @Value("${spring.data.redis.host}")
     private String host;
 
     /**
      * redis 端口
      */
-    @Value("${spring.redis.port}")
+    @Value("${spring.data.redis.port}")
     private String port;
 
     @Bean
@@ -85,7 +85,7 @@ public class CacheConfig {
         om.registerModule(new JavaTimeModule());
         om.setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.ANY);
         om.activateDefaultTyping(LaissezFaireSubTypeValidator.instance,ObjectMapper.DefaultTyping.NON_FINAL);
-        jackson2JsonRedisSerializer.setObjectMapper(om);
+        jackson2JsonRedisSerializer.serialize(om);
         // 设置序列化的value值
         redisTemplate.setValueSerializer(jackson2JsonRedisSerializer);
         // 设置序列化的hash值

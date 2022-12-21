@@ -6,10 +6,8 @@ import com.lichi.springbootbase.auth.entity.JwtProperties;
 import com.lichi.springbootbase.auth.entity.UserDetail;
 import com.lichi.springbootbase.auth.enums.CacheNameEnum;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import javax.servlet.FilterChain;
@@ -27,7 +25,6 @@ import java.util.Objects;
  * @since: 2022/12/19
  */
 @Slf4j
-@Component
 public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
 
 
@@ -36,7 +33,7 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
 
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws IOException, ServletException, ServletException {
         log.info("JWT过滤器通过校验请求头token进行自动登录...");
         JwtProperties jwtProperties = new JwtProperties();
         //获取请求头token
