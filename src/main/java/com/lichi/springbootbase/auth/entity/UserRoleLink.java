@@ -1,9 +1,6 @@
 package com.lichi.springbootbase.auth.entity;
 
-import com.baomidou.mybatisplus.annotation.FieldFill;
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableLogic;
+import com.baomidou.mybatisplus.annotation.*;
 import lombok.Data;
 
 import java.io.Serial;
@@ -22,7 +19,7 @@ public class UserRoleLink implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
 
-    @TableId
+    @TableId(type = IdType.AUTO)
     private Long id;
 
     /**

@@ -1,9 +1,6 @@
 package com.lichi.springbootbase.auth.entity;
 
-import com.baomidou.mybatisplus.annotation.FieldFill;
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableLogic;
+import com.baomidou.mybatisplus.annotation.*;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
@@ -32,7 +29,7 @@ public class RoleInfo implements Serializable {
     /**
      * 主键Id
      */
-    @TableId
+    @TableId(type = IdType.AUTO)
     private Long id;
 
     /**
