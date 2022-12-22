@@ -2,6 +2,7 @@ package com.lichi.springbootbase;
 
 import com.lichi.springbootbase.auth.components.JwtComponent;
 import com.lichi.springbootbase.auth.entity.UserDetail;
+import com.lichi.springbootbase.auth.enums.RoleEnum;
 import com.lichi.springbootbase.response.ApiResponse;
 import com.lichi.springbootbase.response.enums.ApiResponseStatusEnum;
 import lombok.extern.slf4j.Slf4j;
@@ -68,5 +69,11 @@ class SpringbootbaseApplicationTests {
     @Test
     void testJDBC(){
         dataSourceProperties.getEmbeddedDatabaseConnection();
+    }
+
+    @Test
+    void testEnum(){
+        long roleCode = RoleEnum.USER.roleCode("USER");
+        log.info("this is enum code: {}",roleCode );
     }
 }

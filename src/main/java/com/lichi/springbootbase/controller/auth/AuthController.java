@@ -3,12 +3,14 @@ package com.lichi.springbootbase.controller.auth;
 import com.lichi.springbootbase.annotations.WebLog;
 import com.lichi.springbootbase.auth.components.JwtComponent;
 import com.lichi.springbootbase.auth.entity.JwtProperties;
+import com.lichi.springbootbase.auth.enums.RoleEnum;
 import com.lichi.springbootbase.auth.service.AuthService;
 import com.lichi.springbootbase.response.ApiResponse;
 import com.lichi.springbootbase.response.enums.ApiResponseStatusEnum;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -65,12 +67,12 @@ public class AuthController {
 
     /**
      * 刷新token
-     * @param request HttpServletRequest
+     * @param token String
      * @return ApiResponse
      */
     @WebLog(description = "刷新token")
     @PostMapping("/refresh")
-    public ApiResponse<?> refreshToken(String token) {
+    public ApiResponse<?> refreshToken(@RequestHeader("Authorization") String token) {
         try {
             if (!token.startsWith(jwtProperties.getPrefix())) {
                return ApiResponse.error("刷新token失败");
@@ -79,6 +81,24 @@ public class AuthController {
         } catch (Exception e) {
             log.error("refreshToken error", e);
             return ApiResponse.error("刷新token失败");
+        }
+    }
+
+    /**
+     * 用户注册
+     * @param username 用户名
+     * @param password 密码
+     * @param roleValue 角色值
+     * @return ApiResponse
+     */
+    @WebLog(description = "用户注册接口")
+    @PostMapping("/register")
+    public ApiResponse<?> register(String username, String password, String roleValue) {
+        try {
+            return authService.register(username, password, roleValue);
+        } catch (Exception e) {
+            log.error("register error", e);
+            return ApiResponse.error("注册失败");
         }
     }
 }

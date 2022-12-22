@@ -30,4 +30,13 @@ public interface AuthService {
      * @return
      */
     ApiResponse<?> refreshToken(String token);
+
+    /**
+     * 用户注册
+     * @param username 用户名
+     * @param password 密码
+     * @param roleValue 角色值
+     * @return ApiResponse<?>
+     */
+    ApiResponse<?> register(String username, String password, String roleValue);
 }

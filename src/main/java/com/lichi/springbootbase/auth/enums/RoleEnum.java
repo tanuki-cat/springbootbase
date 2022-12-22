@@ -14,19 +14,35 @@ public enum RoleEnum {
     /**
      * 用户
      */
-    USER("USER"),
+    USER("USER",1),
     /**
      * 管理员
      */
-    ADMIN("ADMIN");
+    ADMIN("ADMIN",2);
 
     /**
      * 枚举值
      */
     private final String value;
 
+    private final long code;
+
     public String getValue() {
         return value;
+    }
+
+    public long getCode() {
+        return code;
+    }
+
+    public long roleCode(String value) {
+        for (RoleEnum roleEnum : RoleEnum.values()) {
+            if (roleEnum.getValue().equals(value)) {
+                return roleEnum.getCode();
+            }
+        }
+        // 默认返回用户
+        return 1;
     }
 
 }

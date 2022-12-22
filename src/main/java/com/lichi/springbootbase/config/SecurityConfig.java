@@ -39,6 +39,7 @@ public class SecurityConfig{
                 .antMatchers(HttpMethod.OPTIONS).permitAll()
                 .antMatchers("/api/auth/login").permitAll()
                 .antMatchers("/api/anon/**").permitAll()
+                .antMatchers("/api/auth/register").permitAll()
                 .anyRequest().authenticated()
                 //自定义的处理器
                 //.accessDecisionManager(accessDecisionManager())
