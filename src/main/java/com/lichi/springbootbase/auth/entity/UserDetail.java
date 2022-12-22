@@ -17,7 +17,7 @@ import java.util.Objects;
 
 /**
  * @description: 用户信息
- * @author: lichi
+ * @author: lychee
  * @date: 2022/12/19 11:43
  * @version: 1.0
  * @since: 2022/12/19

@@ -1,5 +1,7 @@
 package com.lichi.springbootbase.auth.entity;
 
+import com.baomidou.mybatisplus.annotation.FieldFill;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -16,7 +18,7 @@ import java.time.LocalDateTime;
 
 /**
  * @description: 用户信息实体类
- * @author: lichi
+ * @author: lychee
  * @date: 2022/12/19 11:03
  * @version: 1.0
  * @since: 2022/12/19
@@ -55,6 +57,7 @@ public class UserInfo implements Serializable {
     @JsonDeserialize(using = LocalDateTimeDeserializer.class)
     @JsonSerialize(using = LocalDateTimeSerializer.class)
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @TableField(fill = FieldFill.INSERT)
     private LocalDateTime createTime;
 
     /**
@@ -63,6 +66,7 @@ public class UserInfo implements Serializable {
     @JsonDeserialize(using = LocalDateTimeDeserializer.class)
     @JsonSerialize(using = LocalDateTimeSerializer.class)
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @TableField(fill = FieldFill.INSERT_UPDATE)
     private LocalDateTime updateTime;
 
 }

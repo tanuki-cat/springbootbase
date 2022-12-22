@@ -1,5 +1,7 @@
 package com.lichi.springbootbase.auth.entity;
 
+import com.baomidou.mybatisplus.annotation.FieldFill;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableLogic;
 import lombok.Data;
@@ -10,7 +12,7 @@ import java.time.LocalDateTime;
 
 /**
  * @description: 权限对象
- * @author: lichi
+ * @author: lychee
  * @date: 2022/12/19 10:42
  * @version: 1.0
  * @since: 2022/12/19
@@ -50,11 +52,13 @@ public class PermissionInfo implements Serializable {
     /**
      * 创建时间
      */
+    @TableField(fill = FieldFill.INSERT)
     private LocalDateTime createTime;
 
     /**
      * 更新时间
      */
+    @TableField(fill = FieldFill.INSERT_UPDATE)
     private LocalDateTime updateTime;
 
 
