@@ -83,8 +83,15 @@
             <artifactId>mybatis-plus-generator</artifactId>
             <version>3.5.3</version>
         </dependency>
+<!--        mybatis-plus code generator template-->
+        <dependency>
+            <groupId>org.apache.velocity</groupId>
+            <artifactId>velocity-engine-core</artifactId>
+            <version>2.3</version>
+        </dependency>
 
-<!--        springboot cache-->
+
+        <!--        springboot cache-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-cache</artifactId>
