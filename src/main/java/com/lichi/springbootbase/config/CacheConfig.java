@@ -26,7 +26,7 @@ import java.time.Duration;
 
 /**
  * @description: 缓存配置
- * @author: lichi
+ * @author: lychee
  * @date: 2022/12/17 21:07
  * @version: 1.0
  * @since: 2022/12/17

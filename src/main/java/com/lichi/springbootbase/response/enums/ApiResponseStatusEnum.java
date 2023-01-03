@@ -4,7 +4,7 @@ import org.springframework.http.HttpStatus;
 
 /**
  * @description: 请求响应状态枚举
- * @author: lichi
+ * @author: lychee
  * @date: 2022/12/17 18:45
  * @version: 1.0
  * @since: 2022/12/17

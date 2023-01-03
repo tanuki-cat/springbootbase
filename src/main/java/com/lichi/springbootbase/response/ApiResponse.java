@@ -6,7 +6,7 @@ import lombok.NoArgsConstructor;
 
 /**
  * @description: 接口通用响应类型
- * @author: lichi
+ * @author: lychee
  * @date: 2022/12/17 18:33
  * @version: 1.0
  * @since: 2022/12/17

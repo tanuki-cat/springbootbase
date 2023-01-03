@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 
 /**
  * @description: 角色枚举
- * @author: lichi
+ * @author: lychee
  * @date: 2022/12/19 10:30
  * @version: 1.0
  * @since: 2022/12/19

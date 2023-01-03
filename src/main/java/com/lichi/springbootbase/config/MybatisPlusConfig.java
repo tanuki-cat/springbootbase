@@ -13,7 +13,7 @@ import org.springframework.context.annotation.Configuration;
 
 /**
  * @description: mybatis-plus 插件配置类
- * @author: lichi
+ * @author: lychee
  * @date: 2022/12/17 20:47
  * @version: 1.0
  * @since: 2022/12/17
