@@ -7,11 +7,11 @@ import com.auth0.jwt.interfaces.DecodedJWT;
 import com.lichi.springbootbase.auth.entity.AccessToken;
 import com.lichi.springbootbase.auth.entity.JwtProperties;
 import com.lichi.springbootbase.auth.entity.UserDetail;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 
 /**

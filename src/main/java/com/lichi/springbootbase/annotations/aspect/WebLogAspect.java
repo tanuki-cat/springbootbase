@@ -3,6 +3,7 @@ package com.lichi.springbootbase.annotations.aspect;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson2.JSON;
 import com.lichi.springbootbase.annotations.WebLog;
+import jakarta.servlet.http.HttpServletRequest;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.*;
@@ -12,7 +13,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
-import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.Method;
 
 /**

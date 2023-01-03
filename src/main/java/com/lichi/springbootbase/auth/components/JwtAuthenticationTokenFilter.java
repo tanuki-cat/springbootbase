@@ -5,15 +5,15 @@ import com.baomidou.mybatisplus.core.toolkit.ObjectUtils;
 import com.lichi.springbootbase.auth.entity.JwtProperties;
 import com.lichi.springbootbase.auth.entity.UserDetail;
 import com.lichi.springbootbase.auth.enums.CacheNameEnum;
+import jakarta.servlet.FilterChain;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import javax.servlet.FilterChain;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Objects;
 
@@ -33,7 +33,7 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
 
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws IOException, ServletException, ServletException {
+    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws IOException, ServletException, ServletException, ServletException {
         log.info("JWT过滤器通过校验请求头token进行自动登录...");
         JwtProperties jwtProperties = new JwtProperties();
         //获取请求头token

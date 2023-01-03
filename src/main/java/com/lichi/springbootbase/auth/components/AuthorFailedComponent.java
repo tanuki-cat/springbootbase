@@ -2,11 +2,11 @@ package com.lichi.springbootbase.auth.components;
 
 import com.lichi.springbootbase.response.ApiResponse;
 import com.lichi.springbootbase.response.enums.ApiResponseStatusEnum;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**

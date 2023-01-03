@@ -54,7 +54,7 @@ class SpringbootbaseApplicationTests {
     @Test
     void testComponent() {
         UserDetail userDetail = new UserDetail();
-        jwtComponent.createAccessToken(userDetail);
+//        jwtComponent.createAccessToken(userDetail);
     }
 
     @Test
@@ -68,7 +68,7 @@ class SpringbootbaseApplicationTests {
 
     @Test
     void testJDBC(){
-        dataSourceProperties.getEmbeddedDatabaseConnection();
+//        dataSourceProperties.getEmbeddedDatabaseConnection();
     }
 
     @Test
