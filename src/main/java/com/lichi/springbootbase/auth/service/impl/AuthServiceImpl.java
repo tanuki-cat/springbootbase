@@ -10,7 +10,6 @@ import com.lichi.springbootbase.auth.entity.*;
 import com.lichi.springbootbase.auth.enums.CacheNameEnum;
 import com.lichi.springbootbase.auth.enums.RoleEnum;
 import com.lichi.springbootbase.auth.service.AuthService;
-import com.lichi.springbootbase.auth.service.RoleInfoService;
 import com.lichi.springbootbase.auth.service.UserInfoService;
 import com.lichi.springbootbase.auth.service.UserRoleLinkService;
 import com.lichi.springbootbase.response.ApiResponse;
@@ -23,7 +22,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.Objects;
 
 /**
  * @Description: 鉴权service实现

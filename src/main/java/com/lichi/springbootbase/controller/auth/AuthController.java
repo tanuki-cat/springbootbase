@@ -1,9 +1,7 @@
 package com.lichi.springbootbase.controller.auth;
 
 import com.lichi.springbootbase.annotations.WebLog;
-import com.lichi.springbootbase.auth.components.JwtComponent;
 import com.lichi.springbootbase.auth.entity.JwtProperties;
-import com.lichi.springbootbase.auth.enums.RoleEnum;
 import com.lichi.springbootbase.auth.service.AuthService;
 import com.lichi.springbootbase.response.ApiResponse;
 import com.lichi.springbootbase.response.enums.ApiResponseStatusEnum;

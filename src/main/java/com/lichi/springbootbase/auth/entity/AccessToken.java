@@ -1,7 +1,6 @@
 package com.lichi.springbootbase.auth.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.Data;
 
 import java.util.Date;
@@ -37,7 +36,6 @@ public class AccessToken {
         private String token;
         @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
         private Date expiration;
-        private Date createTime;
 
         public Builder(String loginAccount, String token, Date expiration) {
             this.loginAccount = loginAccount;

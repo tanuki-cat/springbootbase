@@ -1,7 +1,6 @@
 package com.lichi.springbootbase.auth.components;
 
 import com.lichi.springbootbase.auth.enums.CacheNameEnum;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.CacheManager;
 import org.springframework.stereotype.Component;
@@ -16,7 +15,6 @@ import java.util.Objects;
  * @since: 2022/12/19
  */
 @Component
-@Slf4j
 public class CacheComponent {
 
     private static CacheManager cacheManager;

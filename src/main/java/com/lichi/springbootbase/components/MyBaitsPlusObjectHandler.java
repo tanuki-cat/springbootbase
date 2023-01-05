@@ -1,7 +1,6 @@
 package com.lichi.springbootbase.components;
 
 import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
-import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.reflection.MetaObject;
 import org.springframework.stereotype.Component;
 
@@ -15,7 +14,6 @@ import java.time.LocalDateTime;
  * @Since: 2022/12/22
  */
 @Component
-@Slf4j
 public class MyBaitsPlusObjectHandler implements MetaObjectHandler {
     /**
      * 插入元对象字段填充（用于插入时对公共字段的填充）
