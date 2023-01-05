@@ -14,6 +14,7 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import java.lang.reflect.Method;
+import java.util.Optional;
 
 /**
  * @Description: WebLog Aop切面
@@ -53,7 +54,10 @@ public class WebLogAspect {
     @Before("webLog()")
     public void doBefore(JoinPoint joinPoint) throws Throwable {
         ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
-        HttpServletRequest request = (HttpServletRequest) attributes.getRequest();
+
+        HttpServletRequest request = (HttpServletRequest) Optional.ofNullable(attributes)
+                                        .map(ServletRequestAttributes::getRequest)
+                                        .orElseThrow(() -> new RuntimeException("request is null"));
 
         String methodDescription = getAspectLogDescription(joinPoint);
 
