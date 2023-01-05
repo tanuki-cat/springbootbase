@@ -1,27 +1,19 @@
 package com.lichi.springbootbase;
 
-import com.lichi.springbootbase.auth.components.JwtComponent;
-import com.lichi.springbootbase.auth.entity.UserDetail;
 import com.lichi.springbootbase.auth.enums.RoleEnum;
 import com.lichi.springbootbase.response.ApiResponse;
 import com.lichi.springbootbase.response.enums.ApiResponseStatusEnum;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.jdbc.DataSourceProperties;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-import javax.sql.DataSource;
 
 
 @SpringBootTest
 @Slf4j
 class SpringbootbaseApplicationTests {
-    @Autowired
-    private JwtComponent jwtComponent;
 
-    private DataSourceProperties    dataSourceProperties;
     static class Message {
         private String message;
 
@@ -53,7 +45,7 @@ class SpringbootbaseApplicationTests {
 
     @Test
     void testComponent() {
-        UserDetail userDetail = new UserDetail();
+        // UserDetail userDetail = new UserDetail();
 //        jwtComponent.createAccessToken(userDetail);
     }
 

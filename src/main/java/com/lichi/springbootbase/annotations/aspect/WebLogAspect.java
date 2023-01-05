@@ -114,12 +114,12 @@ public class WebLogAspect {
         String targetName = joinPoint.getTarget().getClass().getName();
         String methodName = joinPoint.getSignature().getName();
         Object[] arguments = joinPoint.getArgs();
-        Class targetClass = Class.forName(targetName);
+        Class<?> targetClass = Class.forName(targetName);
         Method[] methods = targetClass.getMethods();
         StringBuilder description = new StringBuilder();
         for (Method method : methods) {
             if (method.getName().equals(methodName)) {
-                Class[] clazzs = method.getParameterTypes();
+                Class<?>[] clazzs = method.getParameterTypes();
                 if (clazzs.length == arguments.length) {
                     description.append(method.getAnnotation(WebLog.class).description());
                     break;
