@@ -17,6 +17,7 @@ public class AccessToken {
 
     private String loginAccount;
     private String token;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
     private Date expiration;
 
 
@@ -34,7 +35,7 @@ public class AccessToken {
     public static class Builder {
         private String loginAccount;
         private String token;
-        @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+        @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
         private Date expiration;
 
         public Builder(String loginAccount, String token, Date expiration) {
