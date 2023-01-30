@@ -1,0 +1,15 @@
+version: "2.15.7"
+
+services:
+  shadow_fiend:
+    build:
+      dockerfile: Dockerfile
+      context: .
+    ports:
+      - "8080:8080"
+    container_name: shadowFiend
+    environment:
+      TZ: "Asia/Shanghai"
+    external_links:
+      - mysql:mysql
+      - redis:redis

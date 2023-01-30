@@ -1,0 +1,26 @@
+version: "2.15.7"
+
+services:
+  # mysql
+  mysql:
+    image: mysql:5.7
+    restart: always
+    ports:
+      - "3307:3306"
+    container_name: mysql5
+    command:
+        - --character-set-server=utf8mb4
+        - --collation-server=utf8mb4_unicode_ci
+    environment:
+      MYSQL_ROOT_PASSWORD: "123456"
+      TZ: "Asia/Shanghai"
+
+  # redis
+  redis:
+    image: redis:6.2
+    restart: always
+    ports:
+      - "6380:6379"
+    container_name: redis6
+    environment:
+      TZ: "Asia/Shanghai"
