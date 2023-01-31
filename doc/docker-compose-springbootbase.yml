@@ -13,3 +13,8 @@ services:
     external_links:
       - mysql:mysql
       - redis:redis
+    networks:
+      - app_net
+networks:
+    app_net:
+        external: true

@@ -40,6 +40,7 @@ public class SecurityConfig{
                 .requestMatchers("/api/auth/login").permitAll()
                 .requestMatchers("/api/anon/**").permitAll()
                 .requestMatchers("/api/auth/register").permitAll()
+                .requestMatchers("/api/minio/**").permitAll()
                 .anyRequest().authenticated()
                 //自定义的处理器
                 //.accessDecisionManager(accessDecisionManager())
