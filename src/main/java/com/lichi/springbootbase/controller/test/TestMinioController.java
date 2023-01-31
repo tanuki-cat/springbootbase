@@ -1,5 +1,6 @@
 package com.lichi.springbootbase.controller.test;
 
+import com.lichi.springbootbase.annotations.WebLog;
 import com.lichi.springbootbase.response.ApiResponse;
 import com.lichi.springbootbase.utils.MinioUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -23,6 +24,7 @@ import java.util.List;
 @RequestMapping("/api/minio")
 public class TestMinioController {
     @PostMapping("/upload")
+    @WebLog(description = "上传文件")
     public ApiResponse<?> upload(List<MultipartFile> file) {
         try {
             return ApiResponse.success("上传成功", MinioUtil.upload(file));

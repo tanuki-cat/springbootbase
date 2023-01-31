@@ -30,3 +30,10 @@ mybatis-plus:
       logic-not-delete-value: 0 # ??????(??? 0)
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+#minio
+minio:
+  access-key: Kr9ddv9SayaF9DoC
+  secret-key: GVYYvPeRv4iSgBDiaBoaLhd6f93w0Joq
+  endpoint: http://localhost:9000
+  bucket-name: springbootbase

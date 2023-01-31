@@ -1,19 +1,23 @@
 package com.lichi.springbootbase.annotations.aspect;
 
-import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson2.JSON;
 import com.lichi.springbootbase.annotations.WebLog;
 import jakarta.servlet.http.HttpServletRequest;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.*;
+import org.aspectj.lang.reflect.MethodSignature;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 /**
@@ -73,8 +77,29 @@ public class WebLogAspect {
         log.info("Class Method   : {}.{}", joinPoint.getSignature().getDeclaringTypeName(), joinPoint.getSignature().getName());
         // 打印请求的 IP
         log.info("IP             : {}", request.getRemoteAddr());
+        // 打印请求入参名称
+        var methodName = ((MethodSignature) joinPoint.getSignature()).getMethod().getName();
+        log.info("Method Name    : {}", methodName);
         // 打印请求入参
-        log.info("Request Args   : {}", JSONObject.toJSONString(joinPoint.getArgs()));
+        var argNameList = getArgsName(joinPoint.getTarget().getClass(),methodName);
+        var args = joinPoint.getArgs();
+        var newArgs = new ArrayList<>();
+        for (var i = 0; i < argNameList.size(); i++) {
+            if (args[i] instanceof List<?>) {
+                var parameterList = new ArrayList<>();
+                ((List<?>) args[i]).forEach(item -> {
+                    if (item instanceof MultipartFile) {
+                        parameterList.add(((MultipartFile) item).getOriginalFilename());
+                    } else {
+                        parameterList.add(item);
+                    }
+                });
+                newArgs.add(Map.of(argNameList.get(i), JSON.toJSONString(parameterList)));
+            } else {
+                newArgs.add(Map.of(argNameList.get(i), args[i]));
+            }
+        }
+        log.info("Request Args   : {}", newArgs);
     }
 
     /**
@@ -83,7 +108,6 @@ public class WebLogAspect {
      */
     @After("webLog()")
     public void doAfter(JoinPoint joinPoint) {
-//        log.info("=========================================== End ===========================================" + LINE_SEPARATOR);
     }
 
     /**
@@ -119,13 +143,38 @@ public class WebLogAspect {
         StringBuilder description = new StringBuilder();
         for (Method method : methods) {
             if (method.getName().equals(methodName)) {
-                Class<?>[] clazzs = method.getParameterTypes();
-                if (clazzs.length == arguments.length) {
+                Class<?>[] clazz = method.getParameterTypes();
+                if (clazz.length == arguments.length) {
                     description.append(method.getAnnotation(WebLog.class).description());
                     break;
                 }
             }
         }
         return description.toString();
+    }
+
+    /**
+     * 获取参数名
+     * @param clazz Class
+     * @param methodName 方法名
+     * @return List<String>
+     */
+    private List<String> getArgsName(Class<?> clazz, String methodName) {
+        var argNames = new ArrayList<String>();
+        try {
+            var methods = clazz.getDeclaredMethods();
+            for (var method : methods) {
+                if (method.getName().equals(methodName)) {
+                    var params = method.getParameters();
+                    for (var param : params) {
+                        argNames.add(param.getName());
+                    }
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            log.error("获取参数名失败 {}", e.getMessage());
+        }
+        return argNames;
     }
 }
