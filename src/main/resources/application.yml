@@ -35,5 +35,5 @@ mybatis-plus:
 minio:
   access-key: Kr9ddv9SayaF9DoC
   secret-key: GVYYvPeRv4iSgBDiaBoaLhd6f93w0Joq
-  endpoint: http://localhost:9000
+  endpoint: http://minio:9000
   bucket-name: springbootbase

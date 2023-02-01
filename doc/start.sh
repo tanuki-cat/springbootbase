@@ -9,7 +9,7 @@ fi
 cp ../target/springbootbase-0.0.1-SNAPSHOT.jar .
 
 # start the server
-`docker-compose -f ./docker-compose-shadowfiend.yml up -d`
+`docker-compose -f ./docker-compose-springbootbase.yml up -d`
 
 # remove the jar file
 rm springbootbase-0.0.1-SNAPSHOT.jar

@@ -1,16 +1,17 @@
 version: "2.15.7"
 
 services:
-  shadow_fiend:
+  spring_boot_base:
     build:
       dockerfile: Dockerfile
       context: .
     ports:
       - "8080:8080"
-    container_name: shadowFiend
+    container_name: SpringBootBase
     environment:
       TZ: "Asia/Shanghai"
     external_links:
+      - minio:minio
       - mysql:mysql
       - redis:redis
     networks:

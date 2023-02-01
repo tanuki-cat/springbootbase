@@ -27,7 +27,7 @@ public class TestMinioController {
     @WebLog(description = "上传文件")
     public ApiResponse<?> upload(List<MultipartFile> file) {
         try {
-            return ApiResponse.success("上传成功", MinioUtil.upload(file));
+            return ApiResponse.success("上传成功", MinioUtil.upload(file,null));
         } catch (Exception e) {
             log.error(e.getMessage());
             return ApiResponse.error("上传失败");
