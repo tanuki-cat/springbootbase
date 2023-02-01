@@ -33,7 +33,7 @@ mybatis-plus:
 
 #minio
 minio:
-  access-key: Kr9ddv9SayaF9DoC
-  secret-key: GVYYvPeRv4iSgBDiaBoaLhd6f93w0Joq
   endpoint: http://minio:9000
   bucket-name: springbootbase
+  access-key: lychee
+  secret-key: wzyhlj999455
