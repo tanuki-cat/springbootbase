@@ -33,7 +33,6 @@ public class MinioClientConfig {
     @Bean
     public MultipartConfigElement multipartConfigElement() {
         MultipartConfigFactory factory = new MultipartConfigFactory();
-
         factory.setMaxFileSize(DataSize.ofMegabytes(29));
         factory.setMaxRequestSize(DataSize.parse("200MB"));
         return factory.createMultipartConfig();
