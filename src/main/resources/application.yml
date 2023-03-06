@@ -37,3 +37,11 @@ minio:
   bucket-name: springbootbase
   access-key: lychee
   secret-key: wzyhlj999455
+
+#qiniu
+qiniu:
+    access-key: cDTIxDl80ob6spBqsBUO1OH3mfPYH1kunV0lWxSl
+    secret-key: JdSp2PiEKVAprapHeDlrFc7HNUXa5DN3Rm3nkXaK
+    bucket-name: lycheevip
+    domain: http://rr039i7tv.bkt.clouddn.com
+    expireSeconds: 7200

@@ -1,6 +1,6 @@
 package com.lichi.springbootbase.config;
 
-import com.lichi.springbootbase.minio.MinioEntity;
+import com.lichi.springbootbase.oss.minio.MinioEntity;
 import io.minio.MinioClient;
 import jakarta.servlet.MultipartConfigElement;
 import org.springframework.beans.factory.annotation.Autowired;

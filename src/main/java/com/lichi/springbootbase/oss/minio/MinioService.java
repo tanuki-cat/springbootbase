@@ -1,10 +1,9 @@
-package com.lichi.springbootbase.utils;
+package com.lichi.springbootbase.oss.minio;
 
-import com.lichi.springbootbase.minio.MinioEntity;
 import io.minio.*;
 import io.minio.errors.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.ObjectUtils;
 import org.springframework.web.multipart.MultipartFile;
@@ -23,19 +22,19 @@ import java.util.*;
  * @Version: 1.0
  * @Since: 2023/1/30
  */
-@Component
-public class MinioUtil {
+@Service
+public class MinioService {
 
     private static MinioClient minioClient;
     @Autowired
     private void setMinioClient(MinioClient minioClient) {
-        MinioUtil.minioClient = minioClient;
+        MinioService.minioClient = minioClient;
     }
 
     private static MinioEntity minioEntity;
     @Autowired
     private void setMinioEntity(MinioEntity minioEntity) {
-        MinioUtil.minioEntity = minioEntity;
+        MinioService.minioEntity = minioEntity;
     }
 
     /**

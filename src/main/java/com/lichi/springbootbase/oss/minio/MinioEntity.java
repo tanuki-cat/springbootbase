@@ -1,4 +1,4 @@
-package com.lichi.springbootbase.minio;
+package com.lichi.springbootbase.oss.minio;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -15,9 +15,20 @@ import org.springframework.stereotype.Component;
 @Component
 @ConfigurationProperties(prefix = "minio")
 public class MinioEntity {
+    /**
+     * minio的endpoint
+     */
     private String endpoint;
+    /**
+     * minio的accessKey
+     */
     private String accessKey;
+    /**
+     * minio的secretKey
+     */
     private String secretKey;
-
+    /**
+     * minio的存储空间名称
+     */
     private String bucketName;
 }
