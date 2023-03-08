@@ -1,17 +1,14 @@
 package com.lichi.springbootbase.controller.auth;
 
 import com.lichi.springbootbase.annotations.WebLog;
+import com.lichi.springbootbase.auth.dto.LoginDTO;
 import com.lichi.springbootbase.auth.entity.JwtProperties;
 import com.lichi.springbootbase.auth.service.AuthService;
 import com.lichi.springbootbase.response.ApiResponse;
 import com.lichi.springbootbase.response.enums.ApiResponseStatusEnum;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
+import org.springframework.web.bind.annotation.*;
 
 
 /**
@@ -32,15 +29,32 @@ public class AuthController {
 
     /**
      * 登录
-     * @param username 用户名
+     * @param account 用户名
      * @param password 密码
+     * @param type 登录类型
      * @return ApiResponse
      */
     @PostMapping("/login")
-    @WebLog(description = "登录")
-    public ApiResponse<?> login(String username, String password) {
+//    @WebLog(description = "登录")
+    public ApiResponse<?> login(String account, String password,String type) {
         try {
-            return authService.login(username, password);
+            return authService.login(account, password);
+        } catch (Exception e) {
+            log.error("login error", e);
+            return ApiResponse.error(ApiResponseStatusEnum.UNAUTHORIZED,"用户名或密码错误", null);
+        }
+    }
+
+    /**
+     * 登录
+     * @param  loginDTO
+     * @return ApiResponse
+     */
+//    @WebLog(description = "登录")
+    @PostMapping("/login2")
+    public ApiResponse<?> login(@RequestBody LoginDTO loginDTO) {
+        try {
+            return authService.login(loginDTO);
         } catch (Exception e) {
             log.error("login error", e);
             return ApiResponse.error(ApiResponseStatusEnum.UNAUTHORIZED,"用户名或密码错误", null);

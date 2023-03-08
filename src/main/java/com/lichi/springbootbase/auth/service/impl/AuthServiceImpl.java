@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.lichi.springbootbase.auth.components.AuthComponent;
 import com.lichi.springbootbase.auth.components.CacheComponent;
 import com.lichi.springbootbase.auth.components.JwtComponent;
+import com.lichi.springbootbase.auth.dto.LoginDTO;
 import com.lichi.springbootbase.auth.entity.*;
 import com.lichi.springbootbase.auth.enums.CacheNameEnum;
 import com.lichi.springbootbase.auth.enums.RoleEnum;
@@ -49,6 +50,30 @@ public class AuthServiceImpl implements AuthService {
         // 构建token
         UsernamePasswordAuthenticationToken authenticationToken =
                 new UsernamePasswordAuthenticationToken(account, password);
+        // 认证token
+        Authentication authentication = authenticationManager.authenticate(authenticationToken);
+        //存放token
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+        //获取UserDetail
+        UserDetail userDetail = (UserDetail) authentication.getPrincipal();
+        // 生成自定义jwt token
+        AccessToken accessToken = JwtComponent.createAccessToken(userDetail);
+        //将jwt token 放入 userDetail
+        userDetail.setToken(accessToken.getToken());
+        //放入缓存
+        CacheComponent.put(CacheNameEnum.USER, userDetail.getUsername(), userDetail);
+
+        return ApiResponse.success(accessToken);
+    }
+
+    /**
+     * @param loginDTO
+     * @return
+     */
+    @Override
+    public ApiResponse<?> login(LoginDTO loginDTO) {
+        UsernamePasswordAuthenticationToken authenticationToken =
+                new UsernamePasswordAuthenticationToken(loginDTO.getAccount(), loginDTO.getPassword());
         // 认证token
         Authentication authentication = authenticationManager.authenticate(authenticationToken);
         //存放token

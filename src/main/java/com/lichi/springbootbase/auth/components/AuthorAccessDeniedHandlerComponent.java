@@ -1,5 +1,6 @@
 package com.lichi.springbootbase.auth.components;
 
+import com.alibaba.fastjson2.JSON;
 import com.lichi.springbootbase.response.ApiResponse;
 import com.lichi.springbootbase.response.enums.ApiResponseStatusEnum;
 import jakarta.servlet.http.HttpServletRequest;
@@ -24,8 +25,12 @@ public class AuthorAccessDeniedHandlerComponent implements AccessDeniedHandler {
         response.setHeader("Cache-Control", "no-cache");
         response.setCharacterEncoding("UTF-8");
         response.setContentType("application/json");
-        response.setStatus(HttpServletResponse.SC_FORBIDDEN);
-        response.getWriter().println(ApiResponse.fail(ApiResponseStatusEnum.FORBIDDEN, ApiResponseStatusEnum.FORBIDDEN.getMessage(), null));
-        response.getWriter().flush();
+        response.setStatus(HttpServletResponse.SC_OK);
+        ApiResponse apiResponse = new ApiResponse();
+        apiResponse.setCode(ApiResponseStatusEnum.FORBIDDEN.getCode());
+        apiResponse.setMessage(ApiResponseStatusEnum.FORBIDDEN.getMessage());
+        apiResponse.setData(null);
+        response.getWriter().println(JSON.toJSONString(apiResponse));
+//        response.getWriter().flush();
     }
 }

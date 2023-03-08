@@ -28,13 +28,18 @@ import java.util.Objects;
 public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
 
 
-
+    private static final String LOGIN2_URL = "/api/auth/login2";
+    private static final String LOGIN_URL = "/api/auth/login";
 
 
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws IOException, ServletException, ServletException, ServletException {
         log.info("JWT过滤器通过校验请求头token进行自动登录...");
+        if (LOGIN2_URL.equals(request.getRequestURI()) || LOGIN_URL.equals(request.getRequestURI())) {
+            filterChain.doFilter(request, response);
+            return;
+        }
         JwtProperties jwtProperties = new JwtProperties();
         //获取请求头token
         String atToken = JwtComponent.getToken(request);

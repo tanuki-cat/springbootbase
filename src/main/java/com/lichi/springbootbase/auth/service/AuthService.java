@@ -1,5 +1,6 @@
 package com.lichi.springbootbase.auth.service;
 
+import com.lichi.springbootbase.auth.dto.LoginDTO;
 import com.lichi.springbootbase.response.ApiResponse;
 
 /**
@@ -17,6 +18,8 @@ public interface AuthService {
      * @return ApiResponse
      */
     ApiResponse<?> login(String account, String password);
+
+    ApiResponse<?> login(LoginDTO loginDTO);
 
     /**
      * 登出校验
