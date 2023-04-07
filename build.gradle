@@ -10,7 +10,6 @@ plugins {
     id 'java-library'
     id 'org.springframework.boot' version '3.0.3'
     id 'io.spring.dependency-management' version '1.1.0'
-//    id 'org.graalvm.buildtools.native' version '0.9.18'
 }
 
 configurations {
@@ -55,6 +54,15 @@ group = 'com.lichi'
 version = '0.0.1-SNAPSHOT'
 description = 'springbootbase'
 java.sourceCompatibility = JavaVersion.VERSION_17
+
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+    testCompileOnly {
+        extendsFrom testAnnotationProcessor
+    }
+}
 
 
 tasks.withType(JavaCompile) {
@@ -104,6 +112,17 @@ tasks.register("bootJarDev") {
         System.setProperty("profile", "dev")
     }
     finalizedBy("bootJar")
+}
+
+tasks.register("buildNativeImage") {
+    dependsOn("clean","bootJarProd")
+    group("build")
+    description("Builds a native executable.")
+    finalizedBy("nativeImage")
+}
+
+task nativeImage(type:Exec) {
+    commandLine 'sh', 'script/build-native-image.sh'
 }
 
 processResources {
