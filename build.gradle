@@ -9,7 +9,7 @@ import com.bmuschko.gradle.docker.tasks.image.*
 
 plugins {
     id 'java-library'
-    id 'org.springframework.boot' version '3.0.3'
+    id 'org.springframework.boot' version '3.0.5'
     id 'io.spring.dependency-management' version '1.1.0'
     id("com.bmuschko.docker-spring-boot-application") version "9.3.1"
 
@@ -36,7 +36,7 @@ dependencies {
     api 'org.projectlombok:lombok:1.18.26'
     api 'org.springframework.boot:spring-boot-starter-validation'
     api 'com.auth0:java-jwt:4.2.1'
-    api 'com.baomidou:mybatis-plus-boot-starter:3.5.3'
+    api 'com.baomidou:mybatis-plus-boot-starter:3.5.3.1'
     api 'com.baomidou:mybatis-plus-generator:3.5.3'
     api 'org.apache.velocity:velocity-engine-core:2.3'
     api 'org.springframework.boot:spring-boot-starter-cache'
@@ -69,11 +69,11 @@ configurations {
 }
 
 
-tasks.withType(JavaCompile) {
+tasks.withType(JavaCompile).configureEach {
     options.encoding = 'UTF-8'
 }
 
-tasks.withType(Javadoc) {
+tasks.withType(Javadoc).configureEach {
     options.encoding = 'UTF-8'
 }
 
@@ -186,7 +186,7 @@ tasks.register("buildNativeImage") {
     finalizedBy("nativeImage")
 }
 
-task nativeImage(type:Exec) {
+tasks.register('nativeImage', Exec) {
     commandLine 'sh', 'script/build-native-image.sh'
 }
 
