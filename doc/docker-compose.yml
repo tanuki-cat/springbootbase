@@ -2,9 +2,7 @@ version: "2.15.7"
 
 services:
   spring_boot_base:
-    build:
-      dockerfile: Dockerfile
-      context: .
+    image: springbootbase:0.0.1-SNAPSHOT
     ports:
       - "8080:8080"
     container_name: SpringBootBase
@@ -12,8 +10,8 @@ services:
       TZ: "Asia/Shanghai"
     external_links:
       - minio:minio
-      - mysql:mysql
-      - redis:redis
+      - mysql:mysql5
+      - redis:redis6
     networks:
       - app_net
 networks:

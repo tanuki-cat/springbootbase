@@ -106,37 +106,67 @@ tasks.register("bootJarProd") {
     }
     finalizedBy("bootJar")
 }
+def jarName = project.name + "-" + project.version + ".jar"
+def jarPath = "build/libs/"
 
-//注册自定义创建dockerfile任务
-tasks.register("createDockfile", Dockerfile) {
-    var jarName = project.name + "-" + project.version + ".jar"
-    var jarPath = "build/libs/" + jarName
-    //复制jar到docker目录
+//打包完成后将jar包复制到docker目录
+bootJar.doLast {
     copy {
         from jarPath
         into "build/docker"
         include jarName
         //重命名
-//        rename { jarName }
+        //rename { jarName }
     }
+}
+
+//注册自定义创建dockerfile任务
+tasks.register("createDockfileDev", Dockerfile) {
+    dependsOn("bootJarDev")
     //创建dockerfile
     from "openjdk:17-ea-oracle"
     exposePort 8080
     copyFile("springbootbase-0.0.1-SNAPSHOT.jar", "/app/app.jar")
     entryPoint("java", "-jar", "-Dspring.profiles.active=dev","/app/app.jar")
 }
+tasks.register("createDockfileProd", Dockerfile) {
+    dependsOn("bootJarProd")
+    //创建dockerfile
+    from "openjdk:17-ea-oracle"
+    exposePort 8080
+    copyFile("springbootbase-0.0.1-SNAPSHOT.jar", "/app/app.jar")
+    entryPoint("java", "-jar", "-Dspring.profiles.active=prod","/app/app.jar")
+}
 
-
-
-task customBuildDockerImage (type: DockerBuildImage) {
+//构建docker镜像
+tasks.register('buildImageDev', DockerBuildImage) {
     group("docker")
     description("Builds a docker image.")
     mustRunAfter("bootJar")
-    dependsOn(["createDockfile"])
+    dependsOn(["createDockfileDev"])
     var imageName = project.name
     var tag = project.version
-    images.add(imageName+":"+tag)
+    images.add(imageName + ":" + tag)
+    finalizedBy("startDockerCompose")
 }
+tasks.register('buildImageProd', DockerBuildImage) {
+    group("docker")
+    description("Builds a docker image.")
+    mustRunAfter("bootJar")
+    dependsOn(["createDockfileProd"])
+    var imageName = project.name
+    var tag = project.version
+    images.add(imageName + ":" + tag)
+    finalizedBy("startDockerCompose")
+}
+
+//启动docker compose
+tasks.register("startDockerCompose",Exec) {
+    group("docker")
+    description("Starts a docker compose.")
+    commandLine 'docker-compose', '-f', 'docker-compose.yml', 'up', '-d'
+}
+
 
 //devJar
 tasks.register("bootJarDev") {

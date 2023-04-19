@@ -1,0 +1,17 @@
+services:
+    gyqs_admin_backend:
+        image: ${imageName}:${tagVersion}
+        ports:
+            - "8080:8080"
+        container_name: SpringBootBase
+        environment:
+            TZ: "Asia/Shanghai"
+        external_links:
+            - mysql5
+            - redis6
+        networks:
+            - app_net
+        network_mode: "bridge"
+networks:
+    app_net:
+        external: true
