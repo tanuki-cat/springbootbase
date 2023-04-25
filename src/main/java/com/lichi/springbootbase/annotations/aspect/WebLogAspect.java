@@ -15,10 +15,7 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 /**
  * @Description: WebLog Aop切面
@@ -68,7 +65,7 @@ public class WebLogAspect {
         // 打印请求相关参数
         log.info("========================================== Start ==========================================");
         // 打印请求 url
-        log.info("URL            : {}", request.getRequestURL().toString());
+        log.info("URL            : {}", getUrl(joinPoint));
         // 打印描述信息
         log.info("Description    : {}", methodDescription);
         // 打印 Http method
@@ -76,30 +73,12 @@ public class WebLogAspect {
         // 打印调用 controller 的全路径以及执行方法
         log.info("Class Method   : {}.{}", joinPoint.getSignature().getDeclaringTypeName(), joinPoint.getSignature().getName());
         // 打印请求的 IP
-        log.info("IP             : {}", request.getRemoteAddr());
+        log.info("IP             : {}", getIpAddress(joinPoint));
         // 打印请求入参名称
         var methodName = ((MethodSignature) joinPoint.getSignature()).getMethod().getName();
         log.info("Method Name    : {}", methodName);
         // 打印请求入参
-        var argNameList = getArgsName(joinPoint.getTarget().getClass(),methodName);
-        var args = joinPoint.getArgs();
-        var newArgs = new ArrayList<>();
-        for (var i = 0; i < argNameList.size(); i++) {
-            if (args[i] instanceof List<?>) {
-                var parameterList = new ArrayList<>();
-                ((List<?>) args[i]).forEach(item -> {
-                    if (item instanceof MultipartFile) {
-                        parameterList.add(((MultipartFile) item).getOriginalFilename());
-                    } else {
-                        parameterList.add(item);
-                    }
-                });
-                newArgs.add(Map.of(argNameList.get(i), JSON.toJSONString(parameterList)));
-            } else {
-                newArgs.add(Map.of(argNameList.get(i), args[i]));
-            }
-        }
-        log.info("Request Args   : {}", newArgs);
+        log.info("Request Args   : {}", getArgs(joinPoint));
     }
 
     /**
@@ -126,6 +105,41 @@ public class WebLogAspect {
         log.info("Time-Consuming : {} ms", System.currentTimeMillis() - startTime);
         log.info("=========================================== End ===========================================" + LINE_SEPARATOR);
         return result;
+    }
+
+    //从切点中获取IP地址
+    private String getIpAddress(JoinPoint joinPoint) {
+        ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+        HttpServletRequest request = (HttpServletRequest) Optional.ofNullable(attributes)
+                .map(ServletRequestAttributes::getRequest)
+                .orElseThrow(() -> new RuntimeException("request is null"));
+        return request.getRemoteAddr();
+    }
+    //从切点中获取参数名称
+    private List<String> getArgsName(JoinPoint joinPoint) {
+        var signature = joinPoint.getSignature();
+        var methodSignature = (MethodSignature) signature;
+        var parameterNames = methodSignature.getParameterNames();
+        return new ArrayList<String>(Arrays.asList(parameterNames));
+    }
+
+    //从切点中获取url
+    private String getUrl(JoinPoint joinPoint) {
+        ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+        HttpServletRequest request = (HttpServletRequest) Optional.ofNullable(attributes)
+                .map(ServletRequestAttributes::getRequest)
+                .orElseThrow(() -> new RuntimeException("request is null"));
+        return request.getRequestURL().toString();
+    }
+    //获取参数名称和参数值
+    private Map<String, Object> getArgs(JoinPoint joinPoint) {
+        var args = joinPoint.getArgs();
+        var argNameList = getArgsName(joinPoint);
+        var newArgs = new HashMap<String, Object>();
+        for (var i = 0; i < argNameList.size(); i++) {
+            newArgs.put(argNameList.get(i), args[i]);
+        }
+        return newArgs;
     }
 
     /**

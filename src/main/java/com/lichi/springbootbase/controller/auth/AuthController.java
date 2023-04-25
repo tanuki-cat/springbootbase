@@ -35,7 +35,7 @@ public class AuthController {
      * @return ApiResponse
      */
     @PostMapping("/login")
-//    @WebLog(description = "登录")
+    @WebLog(description = "登录")
     public ApiResponse<?> login(String account, String password,String type) {
         try {
             return authService.login(account, password);
@@ -50,7 +50,7 @@ public class AuthController {
      * @param  loginDTO
      * @return ApiResponse
      */
-//    @WebLog(description = "登录")
+    @WebLog(description = "登录")
     @PostMapping("/login2")
     public ApiResponse<?> login(@RequestBody LoginDTO loginDTO) {
         try {
