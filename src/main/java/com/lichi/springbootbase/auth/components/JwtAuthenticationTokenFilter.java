@@ -52,7 +52,7 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
                 if (ObjectUtils.isEmpty(userDetail) || !atToken.equals(userDetail.getToken())) {
                     filterChain.doFilter(request, response);
                 }
-                if (JwtComponent.validationToken(atToken, userDetail)) {
+                if (Boolean.TRUE.equals(JwtComponent.validationToken(atToken, userDetail))) {
                     UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(userDetail, userDetail, userDetail.getAuthorities());
                     SecurityContextHolder.getContext().setAuthentication(authenticationToken);
                     log.info("JWT过滤器通过校验请求头token自动登录成功, user : {}", userDetail.getUsername());

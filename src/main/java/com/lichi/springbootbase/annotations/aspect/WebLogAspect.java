@@ -12,7 +12,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.lang.reflect.Method;
 import java.util.*;
@@ -56,7 +55,7 @@ public class WebLogAspect {
     public void doBefore(JoinPoint joinPoint) throws Throwable {
         ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
 
-        HttpServletRequest request = (HttpServletRequest) Optional.ofNullable(attributes)
+        HttpServletRequest request = Optional.ofNullable(attributes)
                                         .map(ServletRequestAttributes::getRequest)
                                         .orElseThrow(() -> new RuntimeException("request is null"));
 
@@ -65,7 +64,7 @@ public class WebLogAspect {
         // 打印请求相关参数
         log.info("========================================== Start ==========================================");
         // 打印请求 url
-        log.info("URL            : {}", getUrl(joinPoint));
+        log.info("URL            : {}", getUrl());
         // 打印描述信息
         log.info("Description    : {}", methodDescription);
         // 打印 Http method
@@ -73,7 +72,7 @@ public class WebLogAspect {
         // 打印调用 controller 的全路径以及执行方法
         log.info("Class Method   : {}.{}", joinPoint.getSignature().getDeclaringTypeName(), joinPoint.getSignature().getName());
         // 打印请求的 IP
-        log.info("IP             : {}", getIpAddress(joinPoint));
+        log.info("IP             : {}", getIpAddress());
         // 打印请求入参名称
         var methodName = ((MethodSignature) joinPoint.getSignature()).getMethod().getName();
         log.info("Method Name    : {}", methodName);
@@ -87,6 +86,7 @@ public class WebLogAspect {
      */
     @After("webLog()")
     public void doAfter(JoinPoint joinPoint) {
+        // TODO document why this method is empty
     }
 
     /**
@@ -108,9 +108,9 @@ public class WebLogAspect {
     }
 
     //从切点中获取IP地址
-    private String getIpAddress(JoinPoint joinPoint) {
+    private String getIpAddress() {
         ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
-        HttpServletRequest request = (HttpServletRequest) Optional.ofNullable(attributes)
+        HttpServletRequest request = Optional.ofNullable(attributes)
                 .map(ServletRequestAttributes::getRequest)
                 .orElseThrow(() -> new RuntimeException("request is null"));
         return request.getRemoteAddr();
@@ -120,13 +120,13 @@ public class WebLogAspect {
         var signature = joinPoint.getSignature();
         var methodSignature = (MethodSignature) signature;
         var parameterNames = methodSignature.getParameterNames();
-        return new ArrayList<String>(Arrays.asList(parameterNames));
+        return new ArrayList<>(Arrays.asList(parameterNames));
     }
 
     //从切点中获取url
-    private String getUrl(JoinPoint joinPoint) {
+    private String getUrl() {
         ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
-        HttpServletRequest request = (HttpServletRequest) Optional.ofNullable(attributes)
+        HttpServletRequest request = Optional.ofNullable(attributes)
                 .map(ServletRequestAttributes::getRequest)
                 .orElseThrow(() -> new RuntimeException("request is null"));
         return request.getRequestURL().toString();
@@ -168,11 +168,13 @@ public class WebLogAspect {
     }
 
     /**
+     * @deprecated 使用 {@link #getArgsName(JoinPoint)}
      * 获取参数名
      * @param clazz Class
      * @param methodName 方法名
      * @return List<String>
      */
+    @Deprecated
     private List<String> getArgsName(Class<?> clazz, String methodName) {
         var argNames = new ArrayList<String>();
         try {

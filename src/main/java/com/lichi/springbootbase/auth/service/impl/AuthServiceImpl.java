@@ -119,7 +119,7 @@ public class AuthServiceImpl implements AuthService {
      */
     @Override
     public ApiResponse<?> register(String username, String password, String roleValue) {
-        if (isUserNameExist(username)) {
+        if (Boolean.TRUE.equals(isUserNameExist(username))) {
             return ApiResponse.fail("用户名已存在");
         }
         UserInfo userInfo = new UserInfo();
