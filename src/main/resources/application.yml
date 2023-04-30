@@ -34,3 +34,9 @@ qiniu:
     bucket-name: lycheevip
     domain: http://rr039i7tv.bkt.clouddn.com
     expireSeconds: 7200
+
+jwt:
+  secret: sdhuishiuwqeiuwfoes
+  expiration: 1800
+  header: Authorization
+  prefix: "Bearer "

@@ -1,6 +1,8 @@
 package com.lichi.springbootbase.auth.entity;
 
+import com.google.j2objc.annotations.Property;
 import lombok.Data;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
 /**
@@ -12,21 +14,22 @@ import org.springframework.stereotype.Component;
  */
 @Data
 @Component
+@ConfigurationProperties(prefix = "jwt")
 public class JwtProperties {
 /**
      * jwt签名
      */
-    private  String secret = "JWT_SECRET_KEY";
+    private  String secret;
     /**
      * jwt过期时间
      */
-    private  Long expiration = 1800L;
+    private  Long expiration;
     /**
      * jwt请求头
      */
-    private  String header = "Authorization";
+    private  String header;
     /**
      * jwt前缀
      */
-    private  String prefix = "Bearer ";
+    private  String prefix;
 }

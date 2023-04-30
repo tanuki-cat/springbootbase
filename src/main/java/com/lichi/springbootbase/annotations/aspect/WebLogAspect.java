@@ -168,7 +168,7 @@ public class WebLogAspect {
     }
 
     /**
-     * @deprecated 使用 {@link #getArgsName(JoinPoint)}
+     * @deprecated  {since="2023/04/30" ,forRemoval=true, @link #getArgsName(JoinPoint)}
      * 获取参数名
      * @param clazz Class
      * @param methodName 方法名
